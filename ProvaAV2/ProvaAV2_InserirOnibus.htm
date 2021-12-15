@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function idValido(pId){
+            if (pId == "") {
+                return false;
+            }
+            return true;
+        }
+        function marcaValido(pMarca){
+            if (pMarca == "") {
+                return false;
+            }
+            return true;
+        }
+        function modeloValido(pModelo){
+            if (pModelo == "") {
+                return false;
+            }
+            return true;
+        }
+        function qtdAssentosValido(pQtdAssentos){
+            if (pQtdAssentos == "") {
+                return false;
+            }
+            return true;
+        }
+        function temBanheiroValido(pTemBanheiro){
+            if (pTemBanheiro == "") {
+                return false;
+            }
+            return true;
+        }
+        function temArCondicionadoValido(pTemArCondicionado){
+            if (pTemArCondicionado == "") {
+                return false;
+            }
+            return true;
+        }
+        function chassisValido(pChassis){
+            if (pChassis == "") {
+                return false;
+            }
+            return true;
+        }
+        function placaValido(pPlaca){
+            if (pPlaca == "") {
+                return false;
+            }
+            return true;
+        }
+        function ValidarForm() {
+            let objForm = document.getElementById("onubis");
+            console.log("objForm: " + objForm.innerHTML);
+            
+            let strId = document.getElementById("id").value;
+            let strMarca = document.getElementById("marca").value;
+            let strModelo = document.getElementById("modelo").value;
+            let strQtdAssentos = document.getElementById("qtdAssentos").value;
+            let strTemBanheiro = document.getElementById("temBanheiro").value;
+            let strTemArCondicionado = document.getElementById("temArCondicionado").value;
+            let strChassis = document.getElementById("chassis").value;
+            let strPlaca = document.getElementById("placa").value;
+
+            console.log("id: "+ strId + "marca: " + strMarca + "modelo: " + strModelo + "qtdAssentos: " + strQtdAssentos
+            + "temBanheiro: " + strtemBanheiro + "temArCondicionado " + strtemArCondicionado
+            + "chassis: " + strChassis + "placa: " + strPlaca);
+            msgErro = "";
+
+            if (!idValido(strId)) {
+                msgErro = "Nome não pode ser vazio. \n";
+            }
+            if (!marcaValido(strMarca)) {
+                msgErro = "Nome não pode ser vazio. \n";
+            }
+            if (!modeloValido(strModelo)) {
+                msgErro = "Nome não pode ser vazio. \n";
+            }
+            if (!qtdAssentosValido(strQtdAssentos)) {
+                msgErro = "Nome não pode ser vazio. \n";
+            }
+            if (!temBanheiroValido(strTemBanheiro)) {
+                msgErro = "Nome não pode ser vazio. \n";
+            }
+            if (!temArCondicionadoValido(strTemArCondicionado)) {
+                msgErro = "Nome não pode ser vazio. \n";
+            }
+            if (!chassisValido(strChassis)) {
+                msgErro = "Nome não pode ser vazio. \n";
+            }
+            if (!placaValido(strPlaca)) {
+                msgErro = "Nome não pode ser vazio. \n";
+            }     
+            if (msgErro == "") {
+                EnviarForm(strId,strMarca,strModelo,strQtdAssentos,strTemBanheiro,strTemArCondicionado,strChassis,strPlaca);                
+            }
+        }
+        function EnviarForm(pId,pMarca,pModelo,pQtdAssentos,pTemBanheiro,pTemArCondicionado,pChassis,pPlaca) {
+            let xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log("Chegou resposta: " + this.responseText)
+                    document.getElementById("msg").innerHTML = this.responseText;
+                }
+            }
+            xmlHttp.open("GET", "http://localhost/3dawnoite/ProvaAV2_InserirOnibus.php?id=" + pId + "marca=" + pMarca + "modelo="
+             + pModelo "qtdAssentos=" + pQtdAssentos + "temBanheiro=" + pTemBanheiro + "temArCondicionado=" 
+             + pTemArCondicionado + "chassis=" + pChassis + "placa=" +pPlaca);
+            xmlHttp.send();
+            console.log("Enviei requisição");
+        }
+    </script>
+</head>
+<body>
+    <h1>3DAW</h1>
+            <h2>Prova AV2</h2>
+            <a href="ProvaAV2_InserirOnibus.php">Criar Ônibus</a><br>
+            <a href="ProvaAV2_AlterarOnibus.php">Alterar Ônibus</a><br>
+            <a href="ProvaAV2_ListaTodosOnibus.php">Listar Todos Ônibus</a><br>
+
+    <form action="" id="onubis" >
+        Id:                         <input type="text" name="id" id="id"><br>
+        Marca:                      <input type="text" name="marca" id="marca"><br>
+        Modelo:                     <input type="text" name="modelo" id="modelo"><br>
+        Quantideda de Assentos:     <input type="text" name="qtdAssentos" id="qtdAssentos"><br>
+        Banheiro:                   <input type="text" name="temBanheiro" id="temBanheiro"><br>
+        Ar Condicionado:            <input type="text" name="temArCondicionado" id="temArCondicionado"><br>
+        Chassis:                    <input type="text" name="chassis" id="chassis"><br>
+        Placa:                      <input type="text" name="placa" id="placa"><br>
+        <input type="button" value="enviar" onclick="ValidarForm()">
+    </form>
+</body>
+</html>
